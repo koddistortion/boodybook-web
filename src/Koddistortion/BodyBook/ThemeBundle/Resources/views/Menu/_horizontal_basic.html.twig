@@ -1,0 +1,312 @@
+{% extends '@KnpMenu/menu.html.twig' %}
+
+{% import _self as knp_menu %}
+
+{% block root %}
+	{% set listAttributes = item.childrenAttributes %}
+	{%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+	{%- set childrenClasses = childrenClasses|merge(item.level == 0 ? ['nav navbar-nav'] : ['']) %}
+	{%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+	{{ block('list') -}}
+{% endblock %}
+
+{% block mega_column_list %}
+	{% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
+		{% import _self as knp_menu %}
+		<div class="dropdown-menu dropdown-content">
+			<div class="dropdown-content-body">
+				{{ block('mega_column_children') }}
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block mega_column_children %}
+	{# save current variables #}
+	{% set currentOptions = options %}
+	{% set currentItem = item %}
+	{# update the depth for children #}
+	{% if options.depth is not none %}
+		{% set options = options|merge({'depth': currentOptions.depth - 1}) %}
+	{% endif %}
+	{# update the matchingDepth for children #}
+	{% if options.matchingDepth is not none and options.matchingDepth > 0 %}
+		{% set options = options|merge({'matchingDepth': currentOptions.matchingDepth - 1}) %}
+	{% endif %}
+	<div class="row">
+		{% for item in currentItem.children %}
+			<div{{ knp_menu.attributes(item.attributes) }}>
+				{{ block('mega_column') }}
+			</div>
+		{% endfor %}
+	</div>
+	{# restore current variables #}
+	{% set item = currentItem %}
+	{% set options = currentOptions %}
+{% endblock %}
+
+{% block mega_children_list %}
+	{% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
+		{% import _self as knp_menu %}
+		<ul{{ knp_menu.attributes(listAttributes) }}>
+			{{ block('mega_children') }}
+		</ul>
+	{% endif %}
+{% endblock %}
+
+{% block mega_children %}
+	{# save current variables #}
+	{% set currentOptions = options %}
+	{% set currentItem = item %}
+	{# update the depth for children #}
+	{% if options.depth is not none %}
+		{% set options = options|merge({'depth': currentOptions.depth - 1}) %}
+	{% endif %}
+	{# update the matchingDepth for children #}
+	{% if options.matchingDepth is not none and options.matchingDepth > 0 %}
+		{% set options = options|merge({'matchingDepth': currentOptions.matchingDepth - 1}) %}
+	{% endif %}
+	{% for item in currentItem.children %}
+		{{ block('mega_item') }}
+	{% endfor %}
+	{# restore current variables #}
+	{% set item = currentItem %}
+	{% set options = currentOptions %}
+{% endblock %}
+
+{% block mega_column %}
+	{% if item.displayed %}
+		{# building the class of the item #}
+		{%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
+		{%- if matcher.isCurrent(item) %}
+			{%- set classes = classes|merge([options.currentClass]) %}
+		{%- elseif matcher.isAncestor(item, options.matchingDepth) %}
+			{%- set classes = classes|merge([options.ancestorClass]) %}
+		{%- endif %}
+		{%- if item.actsLikeFirst %}
+			{%- set classes = classes|merge([options.firstClass]) %}
+		{%- endif %}
+		{%- if item.actsLikeLast %}
+			{%- set classes = classes|merge([options.lastClass]) %}
+		{%- endif %}
+
+		{# Mark item as "leaf" (no children) or as "branch" (has children that are displayed) #}
+		{% if item.hasChildren and options.depth is not same as(0) %}
+			{% if options.branch_class is not empty and item.displayChildren %}
+				{%- set classes = classes|merge([options.branch_class]) %}
+			{% endif %}
+		{% elseif options.leaf_class is not empty %}
+			{%- set classes = classes|merge([options.leaf_class]) %}
+		{%- endif %}
+
+		{%- set attributes = item.attributes %}
+		{%- if classes is not empty %}
+			{%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
+		{%- endif %}
+		{# displaying the item #}
+		{% import _self as knp_menu %}
+		{{ block('label') }}
+		{# render the list of children#}
+		{%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+		{%- set childrenClasses = childrenClasses|merge(['menu-list']) %}
+		{%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+		{{ block('mega_children_list') }}
+	{% endif %}
+{% endblock %}
+
+{% block mega_item %}
+	{% if item.displayed %}
+		{% if 'templateContent' in item.extras|keys %}
+			{{ item.extra('templateContent')|raw }}
+			{%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+			{%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+			{{ block('list') }}
+		{% else %}
+			{# building the class of the item #}
+			{%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
+			{%- if matcher.isCurrent(item) %}
+				{%- set classes = classes|merge([options.currentClass]) %}
+			{%- elseif matcher.isAncestor(item, options.matchingDepth) %}
+				{%- set classes = classes|merge([options.ancestorClass]) %}
+			{%- endif %}
+			{%- if item.actsLikeFirst %}
+				{%- set classes = classes|merge([options.firstClass]) %}
+			{%- endif %}
+			{%- if item.actsLikeLast %}
+				{%- set classes = classes|merge([options.lastClass]) %}
+			{%- endif %}
+
+			{# Mark item as "leaf" (no children) or as "branch" (has children that are displayed) #}
+			{% if item.hasChildren and options.depth is not same as(0) %}
+				{% if options.branch_class is not empty and item.displayChildren %}
+					{%- set classes = classes|merge([options.branch_class]) %}
+				{% endif %}
+			{% elseif options.leaf_class is not empty %}
+				{%- set classes = classes|merge([options.leaf_class]) %}
+			{%- endif %}
+
+			{%- set attributes = item.attributes %}
+			{%- if classes is not empty %}
+				{%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
+			{%- endif %}
+			{# displaying the item #}
+			{% import _self as knp_menu %}
+			<li{{ knp_menu.attributes(attributes) }}>
+				{{ block('mega_linkElement') }}
+				{# render the list of children#}
+				{%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+				{%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+				{{ block('list') }}
+			</li>
+		{% endif %}
+	{% endif %}
+{% endblock %}
+
+{% block mega_container_item %}
+	{% if item.displayed %}
+		{# building the class of the item #}
+		{%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
+		{%- if matcher.isCurrent(item) %}
+			{%- set classes = classes|merge([options.currentClass]) %}
+		{%- elseif matcher.isAncestor(item, options.matchingDepth) %}
+			{%- set classes = classes|merge([options.ancestorClass]) %}
+		{%- endif %}
+		{%- if item.actsLikeFirst %}
+			{%- set classes = classes|merge([options.firstClass]) %}
+		{%- endif %}
+		{%- if item.actsLikeLast %}
+			{%- set classes = classes|merge([options.lastClass]) %}
+		{%- endif %}
+
+		{# Mark item as "leaf" (no children) or as "branch" (has children that are displayed) #}
+		{% if item.hasChildren and options.depth is not same as(0) %}
+			{% if options.branch_class is not empty and item.displayChildren %}
+				{%- set classes = classes|merge([options.branch_class]) %}
+			{% endif %}
+		{% elseif options.leaf_class is not empty %}
+			{%- set classes = classes|merge([options.leaf_class]) %}
+		{%- endif %}
+
+		{%- set attributes = item.attributes %}
+		{%- if classes is not empty %}
+			{%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
+		{%- endif %}
+		{# displaying the item #}
+		{% import _self as knp_menu %}
+		<li{{ knp_menu.attributes(attributes) }}>
+			{{ block('linkElement') }}
+			{# render the list of children#}
+			{%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+			{%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+			{{ block('mega_column_list') }}
+		</li>
+	{% endif %}
+{% endblock %}
+
+{% block item %}
+	{% if item.displayed %}
+		{% if 'mega' in item.attributes|keys %}
+			{{ block('mega_container_item') }}
+		{% else %}
+			{{ block('base_item') }}
+		{% endif %}
+	{% endif %}
+{% endblock %}
+
+{% block base_item %}
+	{% if item.displayed %}
+		{% if 'divider-above' in item.attributes|keys %}<li class="divider"></li>{% endif %}
+		{# building the class of the item #}
+		{%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
+		{%- if matcher.isCurrent(item) %}
+			{%- set classes = classes|merge([options.currentClass]) %}
+		{%- elseif matcher.isAncestor(item, options.matchingDepth) %}
+			{%- set classes = classes|merge([options.ancestorClass]) %}
+		{%- endif %}
+		{%- if item.actsLikeFirst %}
+			{%- set classes = classes|merge([options.firstClass]) %}
+		{%- endif %}
+		{%- if item.actsLikeLast %}
+			{%- set classes = classes|merge([options.lastClass]) %}
+		{%- endif %}
+
+		{# Mark item as "leaf" (no children) or as "branch" (has children that are displayed) #}
+		{% if item.hasChildren and options.depth is not same as(0) %}
+			{% if options.branch_class is not empty and item.displayChildren %}
+				{%- set classes = classes|merge([options.branch_class]) %}
+			{% endif %}
+		{% elseif options.leaf_class is not empty %}
+			{%- set classes = classes|merge([options.leaf_class]) %}
+		{%- endif %}
+		{%-if item.hasChildren and options.depth is not same as(0) -%}
+			{% if item.level == 1 %}
+				{%- set classes = classes|merge(['dropdown']) %}
+			{% elseif item.level > 1%}
+				{%- set classes = classes|merge(['dropdown-submenu']) %}
+			{% endif %}
+		{%- endif -%}
+
+		{%- set attributes = item.attributes %}
+		{%- if classes is not empty %}
+			{%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
+		{%- endif %}
+		{# displaying the item #}
+		{% import _self as knp_menu %}
+		<li{{ knp_menu.attributes(attributes) }}>
+			{% if 'dropdown-header' in attributes|keys %}
+				{{ block('spanElement') }}
+			{% else %}
+				{{ block('linkElement') }}
+			{% endif %}
+			{# render the list of children#}
+			{%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+			{%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
+			{%- set childrenClasses = childrenClasses|merge(['dropdown-menu width-200']) %}
+			{%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+			{{ block('list') }}
+		</li>
+		{% if 'divider-below' in item.attributes|keys %}<li class="divider"></li>{% endif %}
+	{% endif %}
+{% endblock %}
+
+{% macro attributes(attributes) %}
+	{% set excludedAttributes = ['icon', 'divider-above', 'divider-below', 'extra', 'dropdown-header', 'mega'] %}
+	{% for name, value in attributes if name not in excludedAttributes %}
+		{%- if value is not none and value is not same as(false) -%}
+			{{- ' %s="%s"'|format(name, value is same as(true) ? name|e : value|e)|raw -}}
+		{%- endif -%}
+	{%- endfor -%}
+{% endmacro %}
+
+{%- block mega_linkElement -%}
+	{%- import _self as knp_menu -%}
+	{%- set linkAttributes = item.linkAttributes -%}
+	{%- set classes = item.linkAttribute('class') is not empty ? [item.linkAttribute('class')] : [] %}
+	<a href="{{ item.uri is defined and item.uri ? item.uri : 'javascript:void(0);' }}"{{ knp_menu.attributes(linkAttributes) }}>{{ block('label') }}</a>
+{%- endblock -%}
+
+{%- block linkElement -%}
+	{%- import _self as knp_menu -%}
+	{%- set linkAttributes = item.linkAttributes -%}
+	{%- set classes = item.linkAttribute('class') is not empty ? [item.linkAttribute('class')] : [] %}
+	{%-if item.hasChildren and options.depth is not same as(0) -%}
+		{%- set classes = classes|merge(['dropdown-toggle']) %}
+		{%- set linkAttributes = linkAttributes|merge({'data-toggle': 'dropdown'}) %}
+	{%- endif -%}
+	<a href="{{ item.uri is defined and item.uri ? item.uri : 'javascript:void(0);' }}"{{ knp_menu.attributes(linkAttributes) }}>{{ block('label') }}
+	{%- if item.hasChildren and options.depth is not same as(0) and item.level < 2 -%}<span class="caret"></span>{%- endif -%}
+	</a>
+{%- endblock -%}
+
+{% block label %}
+	{%- set translation_domain = item.extra('translation_domain', 'messages') -%}
+	{%- set label = item.label -%}
+	{%- if translation_domain is not same as(false) -%}
+		{%- set label = label|trans(item.extra('translation_params', {}), translation_domain) -%}
+	{%- endif -%}
+	{% set extra = 'extra' in item.labelAttributes|keys ? item.labelAttributes.extra : false %}
+	{% if extra %}<span class="{{ extra.class|default('badge pull-right') }}">{{ extra.value|default('') }}</span>{% endif %}
+	{% set icon = 'icon' in item.labelAttributes|keys ? item.labelAttributes.icon : false %}
+	{% if icon %}<i class="{{ icon }}"></i> {% endif %}
+	<span{{ knp_menu.attributes(item.labelAttributes) }}>{%- if options.allow_safe_labels and item.extra('safe_label', false) %}{{ label|raw }}{% else %}{{ label }}{% endif -%}</span>
+{% endblock %}

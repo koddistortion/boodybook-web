@@ -1,0 +1,72 @@
+{% extends '@FOSUser/layout.html.twig' %}
+{% trans_default_domain 'BodyBookPlatformBundle' %}
+
+{% block body %}
+	<div class="row">
+		<div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3">
+			<div class="panel login-form">
+				<div class="panel-body">
+					<form action="{{ path("fos_user_security_check") }}" method="post">
+						{% if csrf_token %}
+							<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+						{% endif %}
+						<div class="text-center">
+							<div class="icon-object border-slate-300 text-slate-300"><i class="icon-user-lock"></i></div>
+							<h5 class="content-group">{{ 'bb_platform.views.security.login.login'|trans }} <small class="display-block">{{ 'bb_platform.views.security.login.yourCredentials'|trans }}</small></h5>
+						</div>
+
+						{% if error %}
+							<div class="alert bg-danger alert-styled-left">
+								<button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button>
+								{{ error.messageKey|trans(error.messageData, 'security') }}
+							</div>
+						{% endif %}
+
+						<div class="form-group has-feedback has-feedback-left">
+							<input type="text" class="form-control" placeholder="Username" id="username" name="_username" value="{{ last_username }}" required="required" />
+							<div class="form-control-feedback">
+								<i class="icon-user text-muted"></i>
+							</div>
+						</div>
+
+						<div class="form-group has-feedback has-feedback-left">
+							<input type="password" class="form-control" placeholder="Password" id="password" name="_password" required="required" >
+							<div class="form-control-feedback">
+								<i class="icon-lock2 text-muted"></i>
+							</div>
+						</div>
+
+						<div class="form-group login-options">
+							<div class="row">
+								<div class="col-sm-6">
+									<label class="checkbox-inline">
+										<input type="checkbox" class="styled" checked="checked" id="remember_me" name="_remember_me" value="on" >
+										{{ 'bb_platform.views.security.login.remember'|trans }}
+									</label>
+								</div>
+
+								<div class="col-sm-6 text-right">
+									<a href="{{ path('fos_user_resetting_request') }}">{{ 'bb_platform.views.security.login.forgotPassword'|trans }}</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<button type="submit" class="btn bg-primary btn-block" id="_submit" name="_submit">{{ 'bb_platform.views.security.login.loginAction'|trans }}<i class="icon-arrow-right14 position-right"></i></button>
+						</div>
+
+						<div class="content-divider text-muted form-group"><span>{{ 'bb_platform.views.security.login.otherServices'|trans }}</span></div>
+						<ul class="list-inline form-group list-inline-condensed text-center">
+							<li title="Google"><a href="{{ path('oauth_google_connect') }}" class="btn border-danger text-danger btn-flat btn-icon btn-rounded"><i class="icon-google"></i></a></li>
+							<li title="Facebook"><a href="{{ path('oauth_facebook_connect') }}" class="btn border-indigo text-indigo btn-flat btn-icon btn-rounded"><i class="icon-facebook"></i></a></li>
+							<li title="Twitter"><a href="{{ path('oauth_twitter_connect') }}" class="btn border-info text-info btn-flat btn-icon btn-rounded"><i class="icon-twitter"></i></a></li>
+						</ul>
+
+						<div class="content-divider text-muted form-group"><span>{{ 'bb_platform.views.security.login.noAccountYet'|trans }}</span></div>
+						<a href="{{ path('fos_user_registration_register') }}" class="btn btn-default btn-block content-group">{{ 'bb_platform.views.security.login.signUp'|trans }}</a>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

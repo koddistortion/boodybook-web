@@ -1,0 +1,26 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% trans_default_domain 'BodyBookPlatformBundle' %}
+
+{% block fos_user_content %}
+	<div class="text-center">
+		<div class="icon-object border-success text-success"><i class="icon-reading"></i></div>
+		<h5 class="content-group-lg">{{ 'bb_platform.views.security.register.accountConfirmed'|trans }}
+			<small class="display-block">{{ 'bb_platform.views.security.register.proceedToLogin'|trans }}</small>
+		</h5>
+	</div>
+
+	<p class="text-center">{{ 'registration.confirmed'|trans({'%username%': ('<strong>' ~ user.username ~ '</strong>')}, 'FOSUserBundle')|raw }}</p>
+	{% if targetUrl %}
+		<p class="text-center no-margin-bottom"><a href="{{ targetUrl }}">{{ 'registration.back'|trans({}, 'FOSUserBundle') }}</a></p>
+	{% else %}
+		<hr />
+		<p class="text-center">{{ 'bb_platform.views.security.register.redirectedToLogin'|trans }}</p>
+		<p class="text-center no-margin-bottom"><a href="{{ path('fos_user_security_login') }}">{{ 'bb_platform.views.security.register.clickHereToProceed'|trans }}</p>
+		<script type="text/javascript">
+			window.setTimeout(function() {
+				document.location = {{ path('fos_user_security_login')|json_encode|raw }};
+			}, 3000);
+		</script>
+	{% endif %}
+{% endblock fos_user_content %}

@@ -1,0 +1,18 @@
+{% extends '@KoddistortionBodyBookTheme/Menu/_horizontal_basic.html.twig' %}
+
+{% block root %}
+	{% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user %}
+	<ul class="nav navbar-nav navbar-right no-margin-left">
+		<li class="dropdown dropdown-user">
+			<a class="dropdown-toggle" data-toggle="dropdown">
+				{% set profilePicture = app.user.profilePicture|default(asset('bundles/koddistortionbodybooktheme/images/image.png')) %}
+				<img src="{{ profilePicture }}" alt="">
+				<span>{{ app.user.firstname|default(app.user.username) }}</span>
+				<i class="caret"></i>
+			</a>
+			{% set listAttributes = item.childrenAttributes %}
+			{{ block('list') -}}
+		</li>
+	</ul>
+	{% endif %}
+{% endblock %}

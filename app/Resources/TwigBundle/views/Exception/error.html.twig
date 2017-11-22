@@ -1,0 +1,32 @@
+{% extends '@KoddistortionBodyBookTheme/Default/base.html.twig' %}
+
+{% trans_default_domain 'BodyBookPlatformBundle' %}
+
+{% block html_title %}{{ status_code }} - {{ status_text }}{% endblock %}
+{% block body %}
+	<!-- Error title -->
+	<div class="text-center content-group">
+		<h1 class="error-title">{{ status_code }}</h1>
+		<h5>{{ 'bb_platform.views.errors.general.message'|trans }} {{ status_text }}!</h5>
+	</div>
+	<!-- /error title -->
+
+	<!-- Error content -->
+	<div class="row">
+		<div class="col-lg-4 col-lg-offset-4 col-sm-6 col-sm-offset-3">
+			<form action="#" class="main-search panel panel-body">
+				<div class="form-group has-feedback">
+					<input type="text" class="form-control input-lg" placeholder="{{ 'bb_platform.views.errors.general.search'|trans }}">
+					<div class="form-control-feedback">
+						<i class="icon-search4 text-size-large text-muted"></i>
+					</div>
+				</div>
+
+				<div class="text-center">
+					<a href="{{ path('homepage') }}" class="btn bg-primary"><i class="icon-circle-left2 position-left"></i> {{ 'bb_platform.views.errors.general.backToDashboard'|trans }}</a>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- /error wrapper -->
+{% endblock %}

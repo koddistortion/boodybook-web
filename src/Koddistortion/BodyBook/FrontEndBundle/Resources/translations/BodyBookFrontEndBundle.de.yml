@@ -1,0 +1,16 @@
+bb_frontend:
+  menu:
+    main:
+      login: Anmelden
+      register: Registrieren
+    user:
+      profile: Profil
+      logout: Abmelden
+    second:
+      dashboard: Dashboard
+
+  views:
+    profile:
+      profile: Profil
+      coverImage: Titelbild
+      memberSince: Mitglied seit

@@ -1,0 +1,27 @@
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    prefix: /security
+
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /oauth/connect
+
+hwi_oauth_connect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
+    prefix:   /oauth/connect
+
+hwi_oauth_login:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix:   /oauth/login
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+koddistortion_body_book_platform:
+    resource: "@KoddistortionBodyBookPlatformBundle/Resources/config/routing.yml"
+
+koddistortion_body_book_front_end:
+    resource: "@KoddistortionBodyBookFrontEndBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

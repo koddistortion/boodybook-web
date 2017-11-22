@@ -1,0 +1,26 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Koddistortion\BodyBook\PlatformBundle\:
+        resource: '../*'
+        exclude: '../{Entity,Repository}'
+
+    koddistortion.bodybook.oauth_aware.user_provider:
+      class: Koddistortion\BodyBook\PlatformBundle\Service\OAuthUserProvider
+      arguments:
+        - '@fos_user.user_manager'
+        - '@fos_user.util.token_generator.default'
+        - { google: google_id, facebook: facebook_id, twitter: twitter_id }
+
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Text
+        tags:
+            - { name: twig.extension }
+
+    twig.extension.text:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }

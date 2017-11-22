@@ -1,0 +1,63 @@
+bb_platform:
+
+  global:
+    home: Home
+
+  views:
+    errors:
+      general:
+        search: Search...
+        backToDashboard: Back to dashboard
+        message: Oops, an error has occurred.
+
+    security:
+      resetting:
+        forgotPassword: Forgot your password?
+        usernameOrMail: Enter your username or email address to reset your password
+        confirmationMail: Password reset mail sent
+        checkYourInbox: Check your inbox and just in case the spam folder
+        updatePassword: Update your password
+        newPasswords: Please provide a new password
+      register:
+        allFieldsRequired: All fields are required
+        createAccount: Create account
+        backToLogin: Back to login form
+        confirmationMail: Confirmation Mail sent
+        checkYourInbox: Check your inbox and just in case the spam folder
+        accountConfirmed: Account confirmed
+        proceedToLogin: Proceed to login and start using BodyBook
+        redirectedToLogin: You will now be redirected to the login form automatically.
+        clickHereToProceed: Click here if you want to proceed immediately.
+
+      login:
+        login: Login to your account
+        yourCredentials: Your credentials
+        remember: Remember me
+        forgotPassword: 'Forgot password?'
+        loginAction: Login
+        noAccountYet: "Don't have an account?"
+        otherServices: or sign in with
+        signUp: Sign up
+
+  forms:
+    security:
+      resetting:
+        password:
+          placeholder: New password
+          placeholder_repeat: Repeat new password
+
+      register:
+        username:
+          placeholder: Choose username
+        firstName:
+          placeholder: First name
+        lastName:
+          placeholder: Last name
+        email:
+          placeholder: Your email
+          placeholder_repeat: Repeat email
+          mismatch: The email addresses do not match
+        password:
+          placeholder: Create password
+          placeholder_repeat: Repeat password
+          mismatch: The passwords do not match

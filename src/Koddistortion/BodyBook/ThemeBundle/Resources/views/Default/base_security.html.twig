@@ -1,0 +1,15 @@
+{% extends '@KoddistortionBodyBookTheme/Default/base.html.twig' %}
+
+{% block body_classes %}navbar-top navbar-bottom layout-boxed login-container{% endblock %}
+
+{% block page_header %}{% endblock %}
+
+	{% block main_navbar %}
+		{% embed '@KoddistortionBodyBookTheme/Menu/main.html.twig' %}
+			{% block main_navbar_content %}
+				{% include 'KoddistortionBodyBookThemeBundle:Menu:main_language.html.twig' %}
+			{% endblock %}
+		{% endembed %}
+	{% endblock %}
+
+	{% block second_navbar %}{% endblock %}

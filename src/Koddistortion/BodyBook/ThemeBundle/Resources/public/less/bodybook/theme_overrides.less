@@ -1,0 +1,18 @@
+@input-border-highlight-color: @color-primary-800;
+@link-color: @color-primary-800;
+
+//** Active dropdown menu item background color.
+@dropdown-link-active-color:     #fff;
+
+//** Active dropdown menu item background color.
+@dropdown-link-active-bg:        @color-primary-800;
+
+.navbar-default {
+	// Dropdown menu items
+	.navbar-nav {
+		// Highlight in default navbar
+		> .active > a:after {
+			background-color: @color-primary-800;
+		}
+	}
+}

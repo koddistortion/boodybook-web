@@ -1,0 +1,102 @@
+{% trans_default_domain 'BodyBookPlatformBundle' %}
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+<div class="text-center">
+	<div class="icon-object border-success text-success"><i class="icon-user-plus"></i></div>
+	<h5 class="content-group-lg">{{ 'bb_platform.views.security.register.createAccount'|trans }}
+		<small class="display-block">{{ 'bb_platform.views.security.register.allFieldsRequired'|trans }}</small>
+	</h5>
+</div>
+
+<div class="form-group has-feedback {{ form.username.vars.errors|length > 0 ? 'has-error' : '' }}">
+	{{ form_widget(form.username) }}
+	<div class="form-control-feedback">
+		<i class="icon-user-plus text-muted"></i>
+	</div>
+	{% for error in form.username.vars.errors %}
+		<span class="help-block">{{ error.message }}</span>
+	{% endfor %}
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group has-feedback {{ form.firstName.vars.errors|length > 0 ? 'has-error' : '' }}">
+			{{ form_widget(form.firstName) }}
+			<div class="form-control-feedback">
+				<i class="icon-user-check text-muted"></i>
+			</div>
+			{% for error in form.firstName.vars.errors %}
+				<span class="help-block">{{ error.message }}</span>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="form-group has-feedback {{ form.lastName.vars.errors|length > 0 ? 'has-error' : '' }}">
+			{{ form_widget(form.lastName) }}
+			<div class="form-control-feedback">
+				<i class="icon-user-check text-muted"></i>
+			</div>
+			{% for error in form.lastName.vars.errors %}
+				<span class="help-block">{{ error.message }}</span>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group has-feedback {{ form.plainPassword.first.vars.errors|length > 0 ? 'has-error' : '' }}">
+			{{ form_widget(form.plainPassword.first) }}
+			<div class="form-control-feedback">
+				<i class="icon-user-lock text-muted"></i>
+			</div>
+			{% for error in form.plainPassword.first.vars.errors %}
+				<span class="help-block">{{ error.message }}</span>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="form-group has-feedback {{ form.plainPassword.second.vars.errors|length > 0 ? 'has-error' : '' }}">
+			{{ form_widget(form.plainPassword.second) }}
+			<div class="form-control-feedback">
+				<i class="icon-user-lock text-muted"></i>
+			</div>
+			{% for error in form.plainPassword.second.vars.errors %}
+				<span class="help-block">{{ error.message }}</span>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6">
+		<div class="form-group has-feedback {{ form.email.first.vars.errors|length > 0 ? 'has-error' : '' }}">
+			{{ form_widget(form.email.first) }}
+			<div class="form-control-feedback">
+				<i class="icon-mention text-muted"></i>
+			</div>
+			{% for error in form.email.first.vars.errors %}
+				<span class="help-block">{{ error.message }}</span>
+			{% endfor %}
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="form-group has-feedback {{ form.email.second.vars.errors|length > 0 ? 'has-error' : '' }}">
+			{{ form_widget(form.email.second) }}
+			<div class="form-control-feedback">
+				<i class="icon-mention text-muted"></i>
+			</div>
+			{% for error in form.email.second.vars.errors %}
+				<span class="help-block">{{ error.message }}</span>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+<div class="text-right">
+	<a href="{{ path('fos_user_security_login') }}" class="btn btn-link"><i class="icon-arrow-left13 position-left"></i> {{ 'bb_platform.views.security.register.backToLogin'|trans }}</a>
+	<button type="submit" class="btn bg-primary btn-labeled btn-labeled-right ml-10"><b><i class="icon-plus3"></i></b> {{ 'bb_platform.views.security.register.createAccount'|trans }}</button>
+</div>
+{{ form_end(form) }}

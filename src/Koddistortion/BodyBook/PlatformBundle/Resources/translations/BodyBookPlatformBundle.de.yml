@@ -1,0 +1,64 @@
+bb_platform:
+
+  global:
+    home: Home
+
+  views:
+    errors:
+      general:
+        search: Suchen...
+        backToDashboard: Zurück zum Dashboard
+        message: Uups, ein Fehler ist aufgetreten.
+
+    security:
+      resetting:
+        forgotPassword: Passwort vergessen?
+        usernameOrMail: Gib deinen Benutzername oder eine E-Mail Adresse ein um dein Passwort zurückzusetzen
+        confirmationMail: E-Mail zum Zurücksetzen des Passworts verschickt
+        checkYourInbox: Bitte überprüfe deinen Posteingang und ggf. den Spam Ordner
+        updatePassword: Aktualisiere dein Passwort
+        newPasswords: Bitte gib ein neues Passwort an
+
+      register:
+        allFieldsRequired: Alle Felder sind erforderlich
+        createAccount: Konto erstellen
+        backToLogin: Zurück zur Anmeldung
+        confirmationMail: E-Mail mit Anmeldebestätigung verschickt
+        checkYourInbox: Bitte überprüfe deinen Posteingang und ggf. den Spam Ordner
+        accountConfirmed: Konto bestätigt
+        proceedToLogin: Weiter zur Anmeldung
+        redirectedToLogin: Du wirst nun automatisch zur Anmeldung weitergeleitet.
+        clickHereToProceed: Klicke hier um sofort fortzufahren.
+
+      login:
+        login: An deinem Konto anmelden
+        yourCredentials: Deine Zugangsdaten
+        remember: Erinnere dich an mich
+        forgotPassword: 'Passwort vergessen?'
+        loginAction: Anmelden
+        noAccountYet: "Noch kein Konto?"
+        otherServices: Oder melde dich an mit
+        signUp: Konto erstellen
+
+  forms:
+    security:
+      resetting:
+        password:
+          placeholder: Neues Passwort
+          placeholder_repeat: Neues Passwort bestätigen
+
+      register:
+        username:
+          placeholder: Benutzername
+        firstName:
+          placeholder: Vorname
+        lastName:
+          placeholder: Nachname
+        email:
+          placeholder: E-Mail Adresse
+          placeholder_repeat: E-Mail Adresse bestätigen
+          mismatch: Die E-Mail Adressen stimmen nicht überein
+        password:
+          placeholder: Passwort
+          placeholder_repeat: Passwort bestätigen
+          mismatch: Die Passwörter stimmen nicht überein

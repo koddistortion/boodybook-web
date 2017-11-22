@@ -1,0 +1,9 @@
+bb_platform:
+
+  forms:
+    security:
+      register:
+        email:
+          mismatch: The email addresses do not match
+        password:
+          mismatch: The passwords do not match

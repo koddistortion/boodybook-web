@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{% block html_title %}{% endblock %}{% if block('html_title') is not empty %} &raquo; BodyBook{% else %}BodyBook{% endif %}</title>
+
+	<!-- Global stylesheets -->
+	{% block stylesheets_fonts %}
+		<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	{% endblock stylesheets_fonts %}
+	{% block stylesheets_icons %}
+		{% stylesheets filter="cssrewrite" output="css/compiled/app.icons.min.css"
+		'bundles/koddistortionbodybooktheme/css/icons/icomoon/styles.css'
+		%}
+		<link rel="stylesheet" href="{{ asset_url }}" />
+		{% endstylesheets %}
+	{% endblock stylesheets_icons %}
+	{% block stylesheets_core %}
+		{% stylesheets filter="cssrewrite" output="css/compiled/app.core.min.css"
+		'bundles/koddistortionbodybooktheme/less/limitless/_main_full/bootstrap.less'
+		'bundles/koddistortionbodybooktheme/less/limitless/_main_full/core.less'
+		'bundles/koddistortionbodybooktheme/less/limitless/_main_full/components.less'
+		'bundles/koddistortionbodybooktheme/less/limitless/_main_full/colors.less' %}
+		<link rel="stylesheet" href="{{ asset_url }}"/>
+		{% endstylesheets %}
+	{% endblock stylesheets_core %}
+	<!-- /global stylesheets -->
+
+	<!-- Core JS files -->
+	{% block javascripts_core %}
+		{% javascripts output="js/compiled/app.core.min.js"
+		'bundles/koddistortionbodybooktheme/js/limitless/core/libraries/jquery.min.js'
+		'bundles/koddistortionbodybooktheme/js/limitless/core/libraries/bootstrap.min.js'
+		'bundles/koddistortionbodybooktheme/js/limitless/plugins/ui/nicescroll.min.js'
+		'bundles/koddistortionbodybooktheme/js/limitless/plugins/ui/drilldown.js'
+		'bundles/koddistortionbodybooktheme/js/limitless/plugins/forms/styling/uniform.min.js'
+		%}
+		<script type="text/javascript" src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+	{% endblock javascripts_core %}
+	<!-- /core JS files -->
+
+	<!-- Theme stylesheets -->
+	{% block stylesheets %}
+		{% stylesheets filter="cssrewrite, lessphp" output="css/compiled/app.theme.min.css"
+		'bundles/koddistortionbodybooktheme/less/bodybook/theme.less' %}
+		<link rel="stylesheet" href="{{ asset_url }}"/>
+		{% endstylesheets %}
+	{% endblock stylesheets %}
+	<!-- /theme stylesheets -->
+
+	<!-- Theme JS files -->
+	{% block javascripts %}
+		{% javascripts output="js/compiled/app.theme.min.js"
+		'bundles/koddistortionbodybooktheme/js/limitless/core/app.min.js'
+		'bundles/koddistortionbodybooktheme/js/bodybook/app.js'
+		%}
+		<script type="text/javascript" src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+	{% endblock javascripts %}
+	<!-- /theme JS files -->
+
+</head>
+<body class="{% block body_classes %}navbar-top-md-md navbar-bottom layout-boxed{% endblock body_classes %}">
+<!-- Fixed navbars wrapper -->
+<div class="{% block navbar_wrapper_classes %}navbar-fixed-top{% endblock %}">
+
+	{% block main_navbar %}
+		{% include 'KoddistortionBodyBookThemeBundle:Menu:main.html.twig' %}
+	{% endblock main_navbar %}
+
+	{% block second_navbar %}
+		{% include 'KoddistortionBodyBookThemeBundle:Menu:second.html.twig' %}
+	{% endblock second_navbar %}
+
+</div>
+<!-- /fixed navbars wrapper -->
+
+{% block page_header %}
+<!-- Page header -->
+<div class="{% block page_header_classes %}page-header{% endblock page_header_classes %}">
+	<div class="page-header-content">
+		<div class="page-title">
+			{% block page_header_title_container %}
+				<h4>{% block page_header_title %}{% endblock page_header_title %}</h4>
+				{% block breadcrump_container %}
+					<ul class="breadcrumb {% block breadcrump_container_classes %}breadcrumb-caret{% endblock %}">
+						{%- block breadcrump %}{% endblock breadcrump %}
+					</ul>
+					<ul class="breadcrumb-elements">
+						{% block breadcrump_elements %}{% endblock %}
+					</ul>
+				{% endblock breadcrump_container %}
+			{% endblock page_header_title_container %}
+		</div>
+
+		<div class="{% if block('page_header_elements') is not empty %}heading-elements{% endif %}">
+			{% block page_header_elements %}{% endblock page_header_elements %}
+		</div>
+	</div>
+</div>
+<!-- /page header -->
+{% endblock page_header %}
+
+{% block page_container %}
+<!-- Page container -->
+<div class="page-container">
+	{% block page_content %}
+	<!-- Page content -->
+	<div class="page-content">
+		<!-- Main content -->
+		{% block main_content %}
+		<div class="content-wrapper">
+			{% block body %}{% endblock body %}
+		</div>
+		{% endblock main_content %}
+		<!-- /main content -->
+	</div>
+	<!-- /page content -->
+	{% endblock page_content %}
+</div>
+<!-- /page container -->
+{% endblock page_container %}
+
+
+{% block page_footer %}
+	<div class="navbar navbar-default navbar-fixed-bottom">
+		<div class="navbar-boxed">
+			<ul class="nav navbar-nav no-border visible-xs-block">
+				<li><a class="text-center collapsed" data-toggle="collapse" data-target="#navbar-footer"><i class="icon-circle-up2"></i></a></li>
+			</ul>
+
+			<div class="navbar-collapse collapse" id="navbar-footer">
+				<div class="navbar-text">
+					{% block footer %}
+					&copy; 2017 koddistortion. <a href="#">BodyBook</a> by <a href="https://koddistortion.net" target="_blank">Oliver Kotte</a>
+					{% endblock footer %}
+				</div>
+				{{ knp_menu_render('footer_right', {'template': 'KoddistortionBodyBookThemeBundle:Menu:footer_right.html.twig'}) }}
+			</div>
+		</div>
+	</div>
+{% endblock page_footer %}
+</body>
+</html>

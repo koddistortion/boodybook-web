@@ -1,0 +1,49 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Koddistortion\BodyBook\FrontEndBundle\:
+        resource: '../*'
+        exclude: '../{Entity,Repository}'
+
+    Koddistortion\BodyBook\FrontEndBundle\Twig\FrontEndExtension:
+      tags:
+          - { name: twig.extension }
+
+    Koddistortion\BodyBook\FrontEndBundle\Menu\AbstractMenuBuilder:
+      arguments: ["@knp_menu.factory"]
+      abstract: true
+
+    Koddistortion\BodyBook\FrontEndBundle\Menu\MainMenuBuilder:
+      parent: Koddistortion\BodyBook\FrontEndBundle\Menu\AbstractMenuBuilder
+      public: true
+      autowire: true
+      autoconfigure: false
+      tags:
+          - { name: knp_menu.menu_builder, method: createMainMenuLeft, alias: main_left }
+          - { name: knp_menu.menu_builder, method: createMainMenuRight, alias: main_right }
+          - { name: knp_menu.menu_builder, method: createMainMenuUser, alias: main_user }
+
+    Koddistortion\BodyBook\FrontEndBundle\Menu\SecondMenuBuilder:
+      parent: Koddistortion\BodyBook\FrontEndBundle\Menu\AbstractMenuBuilder
+      public: true
+      autowire: true
+      autoconfigure: false
+      tags:
+          - { name: knp_menu.menu_builder, method: createSecondMenuLeft, alias: second_left }
+          - { name: knp_menu.menu_builder, method: createSecondMenuRight, alias: second_right }
+
+    Koddistortion\BodyBook\FrontEndBundle\Menu\FooterMenuBuilder:
+      parent: Koddistortion\BodyBook\FrontEndBundle\Menu\AbstractMenuBuilder
+      public: true
+      autowire: true
+      autoconfigure: false
+      tags:
+          - { name: knp_menu.menu_builder, method: createFooterMenuRight, alias: footer_right }
+
+    Koddistortion\BodyBook\FrontEndBundle\Menu\TemplatingExtension:
+      arguments: ["@twig"]
+      tags:
+          - { name: knp_menu.factory_extension }

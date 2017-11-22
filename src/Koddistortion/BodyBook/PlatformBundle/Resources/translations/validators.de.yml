@@ -1,0 +1,9 @@
+bb_platform:
+
+  forms:
+    security:
+      register:
+        email:
+          mismatch: Die E-Mail Adressen stimmen nicht überein
+        password:
+          mismatch: Die Passwörter stimmen nicht überein

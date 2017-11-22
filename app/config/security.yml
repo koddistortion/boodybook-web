@@ -1,0 +1,60 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: ROLE_ADMIN
+
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            pattern: ^/
+            form_login:
+                provider:               fos_userbundle
+                csrf_token_generator:   security.csrf.token_manager
+                login_path:             fos_user_security_login
+                check_path:             fos_user_security_check
+
+            remember_me:
+                secret:                 '%secret%'
+                lifetime:               31536000 # 1 year in seconds
+                path:                   /
+                user_provider:          fos_userbundle
+
+            logout:
+              path: fos_user_security_logout
+              target: homepage
+
+            anonymous:    true
+            logout_on_user_change: true
+
+            oauth:
+                resource_owners:
+                    google:             "/external/login/check-google"
+                    facebook:           "/external/login/check-facebook"
+                    twitter:            "/external/login/check-twitter"
+                login_path:             /oauth/login
+                use_forward:            true
+                failure_path:           /oauth/login
+
+                oauth_user_provider:
+                  service: koddistortion.bodybook.oauth_aware.user_provider
+
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/oauth/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: ROLE_ADMIN }

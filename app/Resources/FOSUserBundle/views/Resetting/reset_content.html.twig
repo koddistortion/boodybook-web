@@ -1,0 +1,44 @@
+{% trans_default_domain 'BodyBookPlatformBundle' %}
+
+<div class="text-center">
+	<div class="icon-object border-slate-300 text-slate-300"><i class="icon-key"></i></div>
+	<h5 class="content-group-lg">{{ 'bb_platform.views.security.resetting.updatePassword'|trans }}
+		<small class="display-block">{{ 'bb_platform.views.security.resetting.newPasswords'|trans }}</small>
+	</h5>
+</div>
+
+{{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
+
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<div class="form-group has-feedback {{ form.plainPassword.first.vars.errors|length > 0 ? 'has-error' : '' }}">
+			{{ form_widget(form.plainPassword.first, {'attr': {'placeholder': 'bb_platform.forms.security.resetting.password.placeholder'|trans}}) }}
+			<div class="form-control-feedback">
+				<i class="icon-user-lock text-muted"></i>
+			</div>
+			{% for error in form.plainPassword.first.vars.errors %}
+				<span class="help-block">{{ error.message }}</span>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-8 col-md-offset-2">
+		<div class="form-group has-feedback {{ form.plainPassword.second.vars.errors|length > 0 ? 'has-error' : '' }}">
+			{{ form_widget(form.plainPassword.second, {'attr': {'placeholder': 'bb_platform.forms.security.resetting.password.placeholder_repeat'|trans}}) }}
+			<div class="form-control-feedback">
+				<i class="icon-user-lock text-muted"></i>
+			</div>
+			{% for error in form.plainPassword.second.vars.errors %}
+				<span class="help-block">{{ error.message }}</span>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-8 col-md-offset-2 text-right">
+		<input type="submit" value="{{ 'resetting.reset.submit'|trans({}, 'FOSUserBundle') }}" class="btn btn-primary"/>
+	</div>
+</div>
+{{ form_end(form) }}

@@ -1,0 +1,26 @@
+{% trans_default_domain 'BodyBookPlatformBundle' %}
+
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST"
+	  class="fos_user_resetting_request form-horizontal">
+	<div class="text-center">
+		<div class="icon-object border-success text-success"><i class="icon-question6"></i></div>
+		<h5 class="content-group-lg">{{ 'bb_platform.views.security.resetting.forgotPassword'|trans }}
+			<small class="display-block">{{ 'bb_platform.views.security.resetting.usernameOrMail'|trans }}</small>
+		</h5>
+	</div>
+
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<div class="form-group">
+				<label for="username" class="no-margin-bottom">{{ 'resetting.request.username'|trans({}, 'FOSUserBundle') }}</label>
+				<input type="text" class="form-control" id="username" name="username" required="required" />
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1 text-right">
+			<input type="submit" class="btn btn-primary" value="{{ 'resetting.request.submit'|trans({}, 'FOSUserBundle') }}"/>
+		</div>
+	</div>
+</form>

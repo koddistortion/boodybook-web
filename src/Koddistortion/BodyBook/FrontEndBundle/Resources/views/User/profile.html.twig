@@ -1,0 +1,61 @@
+{% extends '@KoddistortionBodyBookTheme/Default/base.html.twig' %}
+
+{% trans_default_domain 'BodyBookFrontEndBundle' %}
+
+{% block html_title %}{{ user.fullName }}{% endblock %}
+
+{% block page_header %}{% endblock %}
+
+{% block breadcrump %}
+	<li><a href="{{ path('homepage') }}">{{ 'bb_platform.global.home'|trans({}, 'BodyBookPlatformBundle')}}</a></li>
+	<li><a href="{{ path('fos_user_profile_show') }}">{{ user.fullName }}</a></li>
+	<li class="active">{{ 'bb_frontend.views.profile.profile'|trans }}</li>
+{% endblock breadcrump %}
+
+{% block body %}
+	<div class="profile-cover">
+		{% set coverUrl = asset('bundles/koddistortionbodybooktheme/images/user/profile/default_header_bg.jpg') %}
+		{% set defaultCover = true %}
+		<div class="profile-cover-img" style="background-image: url({{ coverUrl }})"></div>
+		<div class="media">
+			<div class="media-left">
+				<a href="#" class="profile-thumb">
+					{% set profilePicture = user.profilePicture|default(asset('bundles/koddistortionbodybooktheme/images/image.png')) %}
+					<img src="{{ profilePicture }}" class="img-circle img-md" style="max-width: 150px; max-height: 150px;" alt="">
+				</a>
+			</div>
+
+			<div class="media-body">
+				<h1>{{ user.fullName }}
+					<small class="display-block">{{ 'bb_frontend.views.profile.memberSince'|trans }} {{ user.createdAt|localizeddate('long', 'none') }}</small>
+				</h1>
+			</div>
+
+			{% if user == app.user %}
+			<div class="media-right media-middle">
+				<ul class="list-inline list-inline-condensed no-margin-bottom text-nowrap">
+					<li><a href="#" class="btn bg-primary"><i class="icon-file-picture position-left"></i> {{ 'bb_frontend.views.profile.coverImage'|trans }}</a></li>
+				</ul>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+	<div class="navbar navbar-default navbar-xs navbar-component no-border-radius-top">
+		<ul class="nav navbar-nav visible-xs-block">
+			<li class="full-width text-center"><a data-toggle="collapse" data-target="#navbar-filter" class="legitRipple"><i class="icon-menu7"></i></a></li>
+		</ul>
+
+		<div class="navbar-collapse collapse" id="navbar-filter">
+			{#<ul class="nav navbar-nav">#}
+				{#<li class="active"><a href="#settings" data-toggle="tab" class="legitRipple" aria-expanded="true"><i class="icon-cog3 position-left"></i> Settings</a></li>#}
+			{#</ul>#}
+			<div class="navbar-right">
+				<ul class="nav navbar-nav">
+					{% if defaultCover %}
+					<li><a href="https://www.freepik.com/free-photos-vectors/people" title="People image created by Valeria_aksakova - Freepik"><i class="icon-link2"></i> Freepik.com</a></li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</div>
+{% endblock %}

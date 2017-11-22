@@ -1,0 +1,19 @@
+<ul class="nav navbar-nav navbar-right">
+	<li class="dropdown language-switch">
+		<a class="dropdown-toggle" data-toggle="dropdown">
+			<img src="{{ asset('bundles/koddistortionbodybooktheme/images/flags/' ~ app.request.locale ~ '.png') }}" class="position-left" alt="{{ app.request.locale|trans({}, 'lang', app.request.locale) }}"/>
+			{{ app.request.locale|trans({}, 'lang', app.request.locale) }}
+			<span class="caret"></span>
+		</a>
+		<ul class="dropdown-menu">
+			{% for locale in lang.locales if locale != app.request.locale %}
+				<li>
+					<a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': locale})) }}">
+						<img src="{{ asset('bundles/koddistortionbodybooktheme/images/flags/' ~ locale ~ '.png') }}" alt="{{ locale|trans({}, 'lang', locale) }}"/>
+						{{ locale|trans({}, 'lang', locale) }}
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</li>
+</ul>

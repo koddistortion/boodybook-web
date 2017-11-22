@@ -1,0 +1,23 @@
+oauth_google_login:
+    path: /external/login/check-google
+    options: { i18n: false }
+    defaults: { _remember_me: on }
+
+oauth_google_connect:
+    path: /oauth/connect/google
+
+oauth_facebook_login:
+    path: /external/login/check-facebook
+    options: { i18n: false }
+    defaults: { _remember_me: on }
+
+oauth_facebook_connect:
+    path: /oauth/connect/facebook
+
+oauth_twitter_login:
+    path: /external/login/check-twitter
+    options: { i18n: false }
+    defaults: { _remember_me: on }
+
+oauth_twitter_connect:
+    path: /oauth/connect/twitter
