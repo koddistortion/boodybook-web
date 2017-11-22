@@ -101,7 +101,7 @@ fos_user:
         enabled: true
 
     from_email:
-        address: "%mailer_user%"
+        address: "%mailer_from_address%"
         sender_name: "BodyBook"
 
 stof_doctrine_extensions:
