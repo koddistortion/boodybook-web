@@ -42,3 +42,4 @@
 /.idea/
 /vendor/
 /web/web.config
+/composer.lock
