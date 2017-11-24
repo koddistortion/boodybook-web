@@ -89,6 +89,24 @@ class User extends BaseUser {
 	protected $twitter_access_token;
 
 	/**
+	 * @var string|null
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	protected $nokia_id;
+
+	/**
+	 * @var string|null
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	protected $nokia_access_token;
+
+	/**
+	 * @var string|null
+	 * @ORM\Column(type="string", length=255, nullable=true)
+	 */
+	protected $nokia_access_token_secret;
+
+	/**
 	 * @return mixed
 	 */
 	public function getFirstName() {
@@ -240,6 +258,54 @@ class User extends BaseUser {
 	 */
 	public function setTwitterAccessToken(string $twitter_access_token): User {
 		$this->twitter_access_token = $twitter_access_token;
+		return $this;
+	}
+
+	/**
+	 * @return null|string
+	 */
+	public function getNokiaId() {
+		return $this->nokia_id;
+	}
+
+	/**
+	 * @param null|string $nokia_id
+	 * @return User
+	 */
+	public function setNokiaId($nokia_id): User {
+		$this->nokia_id = $nokia_id;
+		return $this;
+	}
+
+	/**
+	 * @return null|string
+	 */
+	public function getNokiaAccessToken() {
+		return $this->nokia_access_token;
+	}
+
+	/**
+	 * @param null|string $nokia_access_token
+	 * @return User
+	 */
+	public function setNokiaAccessToken($nokia_access_token): User {
+		$this->nokia_access_token = $nokia_access_token;
+		return $this;
+	}
+
+	/**
+	 * @return null|string
+	 */
+	public function getNokiaAccessTokenSecret() {
+		return $this->nokia_access_token_secret;
+	}
+
+	/**
+	 * @param null|string $nokia_access_token_secret
+	 * @return User
+	 */
+	public function setNokiaAccessTokenSecret($nokia_access_token_secret): User {
+		$this->nokia_access_token_secret = $nokia_access_token_secret;
 		return $this;
 	}
 

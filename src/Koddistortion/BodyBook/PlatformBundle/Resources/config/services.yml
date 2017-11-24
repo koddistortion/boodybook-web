@@ -8,6 +8,14 @@ services:
         resource: '../*'
         exclude: '../{Entity,Repository}'
 
+    Koddistortion\BodyBook\PlatformBundle\Service\OAuth\Nokia\NokiaClientFactory:
+      arguments: ['@hwi_oauth.storage.session', '@doctrine.orm.entity_manager', '@logger', '@hwi_oauth.http_client', '@security.http_utils']
+
+    Koddistortion\BodyBook\PlatformBundle\Service\OAuth\Nokia\NokiaClient:
+      public: true
+      factory: 'Koddistortion\BodyBook\PlatformBundle\Service\OAuth\Nokia\NokiaClientFactory:createClient'
+      arguments: ['@security.token_storage']
+
     koddistortion.bodybook.oauth_aware.user_provider:
       class: Koddistortion\BodyBook\PlatformBundle\Service\OAuthUserProvider
       arguments:
