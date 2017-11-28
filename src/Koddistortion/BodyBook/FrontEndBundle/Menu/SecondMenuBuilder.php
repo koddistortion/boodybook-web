@@ -45,12 +45,29 @@ class SecondMenuBuilder extends AbstractMenuBuilder {
 ////		$mega->addChild('Column 3 title');
 ////		$mega->addChild('Column 4 title');
 //
-//		$starterKit = $menu->addChild('Starter Kit');
-//		$starterKit->addChild('header1')
-//			->setLabel('Basic Layouts')
-//			->setAttribute('class', 'dropdown-header')
-//			->setAttribute('dropdown-header', true);
-//		$columns = $starterKit->addChild('Columns')->setLabelAttribute('icon', 'icon-grid2');
+		if($this->isGranted(array('IS_AUTHENTICATED_REMEMBERED'))) {
+			$body = $menu->addChild('bb_frontend.menu.second.body.label', array(
+				'labelAttributes' => array('icon' => 'icon-accessibility'),
+				'extras' => array('translation_domain' => 'BodyBookFrontEndBundle')
+			));
+
+			$body->addChild('bb_frontend.menu.second.body.track', array(
+				'route' => 'frontend_body_measures_add',
+				'labelAttributes' => array('icon' => 'icon-plus2'),
+				'attributes' => array('divider-below' => true),
+				'extras' => array('translation_domain' => 'BodyBookFrontEndBundle')
+			));
+			$body->addChild('bb_frontend.menu.second.body.progress', array(
+				'labelAttributes' => array('icon' => 'icon-stats-growth'),
+				'extras' => array('translation_domain' => 'BodyBookFrontEndBundle')
+			));
+
+			$body->addChild('bb_frontend.menu.second.body.calendar', array(
+				'labelAttributes' => array('icon' => 'icon-calendar2'),
+				'extras' => array('translation_domain' => 'BodyBookFrontEndBundle')
+			));
+		}
+		//		$columns = $starterKit->addChild('Columns')->setLabelAttribute('icon', 'icon-grid2');
 //		$columns->addChild('header1-1')
 //			->setLabel('Options')
 //			->setAttribute('class', 'dropdown-header highlight')

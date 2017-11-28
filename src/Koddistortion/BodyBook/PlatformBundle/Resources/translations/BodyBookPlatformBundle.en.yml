@@ -2,6 +2,8 @@ bb_platform:
 
   global:
     home: Home
+    kilogram:
+      abbrev: kgs
 
   views:
     errors:

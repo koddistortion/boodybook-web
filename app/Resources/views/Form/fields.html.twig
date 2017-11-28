@@ -1,0 +1,20 @@
+{% extends 'bootstrap_3_layout.html.twig' %}
+
+{% block form_errors -%}
+	{% if errors|length > 0 -%}
+		{% if form.parent %}<span class="help-block">{% else %}<div class="alert alert-danger">{% endif %}
+		<ul class="list-unstyled">
+			{%- for error in errors -%}
+			<li><i class="icon-exclamation"></i> {{ error.message }}</li>
+			{%- endfor -%}
+		</ul>
+		{% if form.parent %}</span>{% else %}</div>{% endif %}
+	{%- endif %}
+{%- endblock form_errors %}
+
+{% block bodybook_weight_widget -%}
+	<div class="input-group">
+		{{- block('form_widget_simple') -}}
+		<span class="input-group-addon">{{ 'bb_platform.global.kilogram.abbrev'|trans({}, 'BodyBookPlatformBundle') }}</span>
+	</div>
+{%- endblock bodybook_weight_widget %}

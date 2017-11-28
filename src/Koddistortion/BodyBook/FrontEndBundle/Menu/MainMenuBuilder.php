@@ -31,8 +31,9 @@ class MainMenuBuilder extends AbstractMenuBuilder {
 	}
 
 	public function createMainMenuRight(): ItemInterface {
-		$menu = $this->factory->createItem('mainMenuRight');
-		$menu->setChildrenAttribute('class', 'navbar-right no-margin-left');
+		$menu = $this->factory->createItem('mainMenuRight', array(
+			'childrenAttributes' => array('class' => 'navbar-right no-margin-left')
+		));
 
 		if($this->isGranted(array('IS_AUTHENTICATED_REMEMBERED'))) {
 //			$cog = $menu->addChild('Cog');
@@ -58,14 +59,14 @@ class MainMenuBuilder extends AbstractMenuBuilder {
 		} else {
 			$menu->addChild('bb_frontend.menu.main.login', array(
 					'route' => 'fos_user_security_login',
+					'labelAttributes' => array('icon' => 'icon-user-lock'),
 					'extras' => array('translation_domain' => 'BodyBookFrontEndBundle')
-				)
-			)->setLabelAttribute('icon', 'icon-user-lock');
+				));
 			$menu->addChild('bb_frontend.menu.main.register', array(
 					'route' => 'fos_user_registration_register',
+					'labelAttributes' => array('icon' => 'icon-user-plus'),
 					'extras' => array('translation_domain' => 'BodyBookFrontEndBundle')
-				)
-			)->setLabelAttribute('icon', 'icon-user-plus');
+				));
 		}
 		return $menu;
 	}
@@ -74,18 +75,18 @@ class MainMenuBuilder extends AbstractMenuBuilder {
 		$menu = $this->factory->createItem('mainMenuUser');
 		$menu->setChildrenAttribute('class', 'dropdown-menu dropdown-menu-right');
 
-		$profile = $menu->addChild('bb_frontend.menu.user.profile', array(
+		$menu->addChild('bb_frontend.menu.user.profile', array(
 			'route' => 'fos_user_profile_show',
+			'labelAttributes' => array('icon' => 'icon-user-plus'),
+			'attributes' => array('divider-below' => true),
 			'extras' => array('translation_domain' => 'BodyBookFrontEndBundle')
 		));
-		$profile->setLabelAttribute('icon', 'icon-user-plus');
-		$profile->setAttribute('divider-below', true);
 
-		$logout = $menu->addChild('bb_frontend.menu.user.logout', array(
+		$menu->addChild('bb_frontend.menu.user.logout', array(
 			'route' => 'fos_user_security_logout',
+			'labelAttributes' => array('icon' => 'icon-switch2'),
 			'extras' => array('translation_domain' => 'BodyBookFrontEndBundle')
-		));
-		$logout->setLabelAttribute('icon', 'icon-switch2');
+		));;
 
 		return $menu;
 	}

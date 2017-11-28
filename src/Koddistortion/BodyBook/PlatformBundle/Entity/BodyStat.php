@@ -34,16 +34,20 @@ class BodyStat {
 	protected $measureDate;
 
 	/**
-	 * @var float
-	 * @ORM\Column(type="float", nullable=false)
+	 * @var float|null
+	 * @ORM\Column(type="float", nullable=true)
 	 */
-	protected $value;
+	protected $weight;
 
 	/**
-	 * @var int
-	 * @ORM\Column(type="integer", nullable=false)
+	 * @var float|null
+	 * @ORM\Column(type="float", nullable=true)
 	 */
-	protected $type;
+	protected $fat;
+
+	public function __construct() {
+		$this->measureDate = new \DateTime();
+	}
 
 	/**
 	 * @return User
@@ -62,9 +66,9 @@ class BodyStat {
 	}
 
 	/**
-	 * @return \DateTime
+	 * @return \DateTime|null
 	 */
-	public function getMeasureDate(): \DateTime {
+	public function getMeasureDate() {
 		return $this->measureDate;
 	}
 
@@ -72,40 +76,40 @@ class BodyStat {
 	 * @param \DateTime $measureDate
 	 * @return BodyStat
 	 */
-	public function setMeasureDate(\DateTime $measureDate): BodyStat {
+	public function setMeasureDate(\DateTime $measureDate = null): BodyStat {
 		$this->measureDate = $measureDate;
 		return $this;
 	}
 
 	/**
-	 * @return float
+	 * @return float|null
 	 */
-	public function getValue(): float {
-		return $this->value;
+	public function getWeight() {
+		return $this->weight;
 	}
 
 	/**
-	 * @param float $value
+	 * @param float|null $weight
 	 * @return BodyStat
 	 */
-	public function setValue(float $value): BodyStat {
-		$this->value = $value;
+	public function setWeight($weight): BodyStat {
+		$this->weight = $weight;
 		return $this;
 	}
 
 	/**
-	 * @return int
+	 * @return float|null
 	 */
-	public function getType(): int {
-		return $this->type;
+	public function getFat() {
+		return $this->fat;
 	}
 
 	/**
-	 * @param int $type
+	 * @param float|null $fat
 	 * @return BodyStat
 	 */
-	public function setType(int $type): BodyStat {
-		$this->type = $type;
+	public function setFat($fat): BodyStat {
+		$this->fat = $fat;
 		return $this;
 	}
 

@@ -8,9 +8,29 @@ bb_frontend:
       logout: Abmelden
     second:
       dashboard: Dashboard
+      body:
+        label: Körper
+        track: Werte erfassen
+        progress: Verlauf
+        calendar: Kalender
 
   views:
     profile:
       profile: Profil
       coverImage: Titelbild
       memberSince: Mitglied seit
+    body_stat:
+      add:
+        page:
+          title: Neue Körperwerte erfassen
+        portlet:
+          title: Neue Körperwerte erfassen
+
+  forms:
+    body_stat:
+      weight:
+        label: Gewicht
+        placeholder: kg
+      fat:
+        label: Körperfett
+        placeholder: %

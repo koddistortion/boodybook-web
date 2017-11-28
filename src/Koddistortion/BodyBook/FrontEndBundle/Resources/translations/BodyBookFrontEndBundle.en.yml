@@ -8,9 +8,29 @@ bb_frontend:
       logout: Logout
     second:
       dashboard: Dashboard
+      body:
+        label: Body
+        track: Track
+        progress: Progress
+        calendar: Calendar
 
   views:
     profile:
       profile: Profile
       coverImage: Cover image
       memberSince: Member since
+    body_stat:
+      add:
+        page:
+          title: Add New Body Measures
+        portlet:
+          title: Add New Body Measures
+
+  forms:
+    body_stat:
+      weight:
+        label: Weight
+        placeholder: kg
+      fat:
+        label: Body Fat
+        placeholder: %
