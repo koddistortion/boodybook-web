@@ -24,13 +24,31 @@ bb_frontend:
         page:
           title: Add New Body Measures
         portlet:
-          title: Add New Body Measures
+          new:
+            title: Add New Body Measures
+          history:
+            title: Most Recent Measures
+            table:
+              date: Date
+              weight:
+                label: Weight
+                unit: kgs
+              fat:
+                label: Body Fat
+                unit: %
+              empty: No measures have been added yet.
+            more:
+              hint: "{1}Another measure|]1,Inf[%diff% more measures, %measures% in total"
+              link: See Progress
 
   forms:
     body_stat:
+      measureDate: Date & Time
       weight:
         label: Weight
         placeholder: kg
       fat:
         label: Body Fat
         placeholder: %
+      submit: Submit
+      cancel: Cancel

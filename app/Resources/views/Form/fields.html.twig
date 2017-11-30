@@ -12,6 +12,22 @@
 	{%- endif %}
 {%- endblock form_errors %}
 
+{%- block button_widget -%}
+	{%- if label is empty -%}
+		{%- if label_format is not empty -%}
+			{% set label = label_format|replace({
+			'%name%': name,
+			'%id%': id,
+			}) %}
+		{%- else -%}
+			{% set label = name|humanize %}
+		{%- endif -%}
+	{%- endif -%}
+	{%- set class = attr.class|default('btn btn-primary') -%}
+	{%- set attr = attr|merge({class: class|trim}) -%}
+	<button type="{{ type|default('button') }}" {{ block('button_attributes') }}>{% if icon_before %}<i class="{{ icon_before }}"></i> {% endif %}{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}{% if icon_after %} <i class="{{ icon_after }}"></i>{% endif %}</button>
+{%- endblock button_widget -%}
+
 {% block bodybook_weight_widget -%}
 	<div class="input-group">
 		{{- block('form_widget_simple') -}}

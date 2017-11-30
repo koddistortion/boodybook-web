@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the PEC Platform boodybook-web.
+ * This file is part of the PEC Platform BodyBook.
  *
  * (c) PEC project engineers &amp; consultants
  *
@@ -21,6 +21,7 @@ class BodyController extends Controller {
 
 	/**
 	 * @Route(name="frontend_body_measures_add", path="/body/measures/add.html")
+	 * @param Request $request
 	 * @return Response
 	 */
 	public function addMeasureAction(Request $request): Response {
@@ -29,9 +30,22 @@ class BodyController extends Controller {
 			'action' => $this->generateUrl('frontend_body_measures_add'),
 		));
 
+		$repository = $this->getDoctrine()->getRepository(BodyStat::class);
+		$measures = $repository->getMeasuresForUser($this->getUser(), 5);
+		$measuresCount = $repository->getMeasuresCountForUser($this->getUser());
+
 		$form->handleRequest($request);
+		if($form->isSubmitted() && $form->isValid()) {
+			$bodyStat->setUser($this->getUser());
+			$this->getDoctrine()->getManager()->persist($bodyStat);
+			$this->getDoctrine()->getManager()->flush();
+			return $this->redirectToRoute('frontend_body_measures_add');
+		}
 		return $this->render('@KoddistortionBodyBookFrontEnd/Body/track_new_measure.html.twig', array(
-			'form' => $form->createView()
+			'form' => $form->createView(),
+			'measures' => $measures,
+			'totalMeasuresCount' => $measuresCount,
+			'moreMeasures' => \count($measures) < $measuresCount
 		));
 	}
 	

@@ -23,6 +23,10 @@ services:
         - '@fos_user.util.token_generator.default'
         - { google: google_id, facebook: facebook_id, twitter: twitter_id }
 
+    Koddistortion\BodyBook\PlatformBundle\Form\Extension\ButtonIconTypeExtension:
+        tags:
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ButtonType }
+
     twig.extension.intl:
         class: Twig_Extensions_Extension_Text
         tags:

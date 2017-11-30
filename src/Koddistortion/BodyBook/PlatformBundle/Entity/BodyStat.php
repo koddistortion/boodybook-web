@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the PEC Platform boodybook-web.
+ * This file is part of the PEC Platform BodyBook.
  *
  * (c) PEC project engineers &amp; consultants
  *
@@ -13,7 +13,7 @@ namespace Koddistortion\BodyBook\PlatformBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Koddistortion\BodyBook\FrontEndBundle\Repository\BodyStatRepository")
  * @ORM\Table(name="bb_body_stats")
  */
 class BodyStat {
@@ -111,6 +111,10 @@ class BodyStat {
 	public function setFat($fat): BodyStat {
 		$this->fat = $fat;
 		return $this;
+	}
+
+	public function getFatAsPercent() {
+		return $this->fat !== null ? $this->fat * 100.0 : null;
 	}
 
 }

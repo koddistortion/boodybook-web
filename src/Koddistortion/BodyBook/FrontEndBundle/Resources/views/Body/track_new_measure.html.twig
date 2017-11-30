@@ -19,35 +19,105 @@
 	{{ form_start(form, {'attr': {'class': 'fos_user_registration_register'}}) }}
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h6 class="panel-title"><i class="icon-plus2 position-left"></i> {{ 'bb_frontend.views.body_stat.add.portlet.title'|trans }}</h6>
+			<h6 class="panel-title"><i class="icon-plus2 position-left"></i> {{ 'bb_frontend.views.body_stat.add.portlet.new.title'|trans }}</h6>
 		</div>
-
 		<div class="panel-body">
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-xs-12 col-sm-4">
 					{{ form_row(form.measureDate) }}
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6">
+				<div class="col-xs-12 col-sm-4">
 					{{ form_row(form.weight ) }}
 				</div>
-				<div class="col-md-6">
+				<div class="col-xs-12 col-sm-4">
 					{{ form_row(form.fat) }}
 				</div>
 			</div>
-
 		</div>
 		<div class="panel-footer">
 			<div class="heading-elements not-collapsible">
 				<div class="heading-btn pull-right">
-					<button type="submit" class="btn btn-primary">Submit form <i
-								class="icon-arrow-right14 position-right"></i></button>
-					<button type="button" class="btn btn-default legitRipple">Cancel</button>
+					{{ form_widget(form.submit) }}
+					<a href="{{ path('frontend_body_measures_add') }}" class="btn btn-default">{{ 'bb_frontend.forms.body_stat.cancel'|trans }}</a>
 				</div>
 			</div>
 		</div>
 	</div>
 	{{ form_end(form) }}
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h6 class="panel-title"><i class="icon-history position-left"></i> {{ 'bb_frontend.views.body_stat.add.portlet.history.title'|trans }}</h6>
+		</div>
+		{% if measures|length > 0 %}
+		<div class="table-responsive">
+			<table class="table table-striped table-hover table-sm">
+				<thead>
+				<tr class="">
+					<th>{{ 'bb_frontend.views.body_stat.add.portlet.history.table.date'|trans }}</th>
+					<th>{{ 'bb_frontend.views.body_stat.add.portlet.history.table.weight.label'|trans }}</th>
+					<th>{{ 'bb_frontend.views.body_stat.add.portlet.history.table.fat.label'|trans }}</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for measure in measures %}
+				<tr>
+					<td>{{ measure.measureDate|localizeddate('medium', 'short') }}</td>
+					<td>
+						{% set currentWeight = measure.weight is same as(null) ? false : measure.weight|round(2) %}
+						{% set nextWeight = loop.last ? false : measures[loop.index0+1].weight %}
+						{% set nextWeight = nextWeight is same as(null) or nextWeight is same as(false) ? false : nextWeight|round(2) %}
+						{% set diffWeight = (currentWeight is same as(false) or nextWeight is same as(false)) ? false : currentWeight - nextWeight %}
+						{% if diffWeight is not same as(false) %}
+							{% set class = diffWeight == 0 ? 'icon-circle-small' : (diffWeight > 0 ? 'icon-stats-growth2':'icon-stats-decline2') %}
+							<i class="{{ class }}" title="{{ 'bb_frontend.views.body_stat.add.portlet.history.table.weight.value'|trans({'%sign%': (diffWeight > 0 ? '+': ''), '%value%': diffWeight|number_format(2)|localizednumber }) }}"></i>&nbsp;
+						{% else %}
+							<i class="icon-circle-small" style="color: transparent; opacity: 0"></i>&nbsp;
+						{% endif %}
+						{% if currentWeight is not same as(false) %}
+							{{ 'bb_frontend.views.body_stat.add.portlet.history.table.weight.value'|trans({'%sign%':'', '%value%': currentWeight|localizednumber }) }}
+						{% endif %}
+					</td>
+					<td>
+						{% set currentFat = measure.fatAsPercent is same as(null) ? false : measure.fatAsPercent|round(2) %}
+						{% set nextFat = loop.last ? false : measures[loop.index0+1].fatAsPercent %}
+						{% set nextFat = nextFat is same as(null) or nextFat is same as(false) ? false : nextFat|round(2) %}
+						{% set diffFat = (currentFat is same as(false) or nextFat is same as(false)) ? false : currentFat - nextFat %}
+						{% if diffFat is not same as(false) %}
+							{% set class = diffFat == 0 ? 'icon-circle-small' : (diffFat > 0 ? 'icon-stats-growth2':'icon-stats-decline2') %}
+							<i class="{{ class }}" title="{{ 'bb_frontend.views.body_stat.add.portlet.history.table.weight.value'|trans({'%sign%': (diffFat > 0 ? '+': ''), '%value%': diffFat|number_format(2)|localizednumber }) }}"></i>&nbsp;
+						{% else %}
+							<i class="icon-circle-small" style="color: transparent; opacity: 0"></i>&nbsp;
+						{% endif %}
+						{% if currentFat is not same as(false) %}
+							{{ 'bb_frontend.views.body_stat.add.portlet.history.table.fat.value'|trans({'%sign%':'', '%value%': currentFat|localizednumber }) }}
+						{% endif %}
+					</td>
+				</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		{% if moreMeasures %}
+			<div class="panel-footer">
+				<div class="heading-elements not-collapsible">
+					<span class="heading-text">
+						<i class="icon-database4 position-left"></i>
+						{% set measuresDiff = totalMeasuresCount-measures|length %}
+						{{ 'bb_frontend.views.body_stat.add.portlet.history.more.hint'|transchoice(measuresDiff, {'%diff%': measuresDiff, '%measures%': totalMeasuresCount }) }}
+					</span>
+					<a href="#" class="heading-btn btn btn-link pull-right">
+						{{ 'bb_frontend.views.body_stat.add.portlet.history.more.link'|trans }}
+						<i class="icon-arrow-right14 text-default position-right"></i>
+					</a>
+				</div>
+			</div>
+		{% endif %}
+		{% else %}
+			<div class="panel-body">
+				<p>{{ 'bb_frontend.views.body_stat.add.portlet.history.table.empty'|trans }}</p>
+			</div>
+		{% endif %}
+	</div>
 {% endblock %}
 

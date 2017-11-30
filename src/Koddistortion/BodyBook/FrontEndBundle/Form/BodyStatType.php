@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the PEC Platform boodybook-web.
+ * This file is part of the PEC Platform BodyBook.
  *
  * (c) PEC project engineers &amp; consultants
  *
@@ -14,8 +14,8 @@ use Koddistortion\BodyBook\PlatformBundle\Entity\BodyStat;
 use Koddistortion\BodyBook\PlatformBundle\Form\WeightType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\PercentType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -35,7 +35,13 @@ class BodyStatType extends AbstractType {
 			'scale' => 2
 		));
 		$builder->add('measureDate', DateTimeType::class, array(
-
+			'label' => 'bb_frontend.forms.body_stat.measureDate',
+			'date_widget' => 'single_text',
+			'time_widget' => 'single_text'
+		));
+		$builder->add('submit', SubmitType::class, array(
+			'icon_after' => 'icon-arrow-right14 position-right',
+			'label' => 'bb_frontend.forms.body_stat.submit'
 		));
 	}
 

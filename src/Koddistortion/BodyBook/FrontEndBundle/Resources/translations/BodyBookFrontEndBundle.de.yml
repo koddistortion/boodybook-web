@@ -22,15 +22,35 @@ bb_frontend:
     body_stat:
       add:
         page:
-          title: Neue Körperwerte erfassen
+          title: Neue Werte erfassen
         portlet:
-          title: Neue Körperwerte erfassen
+          new:
+            title: Neue Werte erfassen
+          history:
+            title: Letzte Werte
+            table:
+              date: Datum
+              weight:
+                label: Gewicht
+                unit: kg
+                value: "%sign%%value% kg"
+              fat:
+                label: Körperfett
+                unit: %
+                value: "%sign%%value% %"
+              empty: Bisher wurden keine Werte erfasst.
+            more:
+              hint: "{1}1 weiterer Wert|]1,Inf[%diff% weitere Werte, %measures% insgesamt"
+              link: Siehe Verlauf
 
   forms:
     body_stat:
+      measureDate: Datum und Uhrzeit
       weight:
         label: Gewicht
         placeholder: kg
       fat:
         label: Körperfett
         placeholder: %
+      submit: Speichern
+      cancel: Abbrechen

@@ -1,6 +1,6 @@
 <?php
 /*
- * This file is part of the PEC Platform bodybook-web.
+ * This file is part of the PEC Platform BodyBook.
  *
  * (c) PEC project engineers &amp; consultants
  *
